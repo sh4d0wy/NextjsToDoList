@@ -10,12 +10,11 @@ import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
 import Button from "../button/Button";
 import { arrowLeft, bars, logout } from "@/app/utils/Icons";
-import { UserButton, auth, useClerk, useUser } from "@clerk/nextjs";
+import { UserButton, useClerk, useUser } from "@clerk/nextjs";
 import { Span } from "next/dist/trace";
 
 export default function Sidebar() {
-  const [loggout,setLogout] = useState(false);
-  const { theme,collapsed,collapsedMenu} = useGlobalState();
+  const { theme,collapsed,collapsedMenu,userSignedOut} = useGlobalState();
   const router = useRouter();
   const pathName = usePathname();
   const {signOut} = useClerk();
@@ -43,7 +42,7 @@ export default function Sidebar() {
               <Image width={50} height={50} src={imageUrl} alt="profile" />
             </div>
             <div className="user-btn absolute z-30 top-0 w-full h-full">
-              <UserButton/>
+              <UserButton afterSignOutUrl="/signin"/>
             </div>
             <span>
               {firstName} {lastName}
@@ -73,9 +72,9 @@ export default function Sidebar() {
             fs={"1.2rem"}
             icon={logout}
             click={()=>{
+              userSignedOut
               signOut(()=>{
-                router.push("/signin");
-                setLogout(true);
+                router.push("/signin")
               })
             }}
             />

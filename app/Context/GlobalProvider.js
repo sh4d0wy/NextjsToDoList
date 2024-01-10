@@ -17,7 +17,11 @@ function GlobalProvider({ children }) {
   const {user} = useUser();
   const [modal,setModal] = useState();
   const [collapsed,setCollapsed] = useState(false);
+  const [signout,setSignedOut] = useState(false);
 
+  const userSignedOut = ()=>{
+    setSignedOut(true);
+  }
   const collapsedMenu = ()=>{
     setCollapsed(!collapsed);
   }
@@ -95,7 +99,9 @@ function GlobalProvider({ children }) {
         modal,
         allTasks,
         collapsed,
-        collapsedMenu
+        collapsedMenu,
+        signout,
+        userSignedOut,
       }}
       >
         <globalUpdateContext.Provider>

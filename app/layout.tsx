@@ -5,10 +5,12 @@ import NextTopLoader from "nextjs-toploader";
 import Sidebar from "./Components/sidebar/Sidebar";
 import Globalstyles from "./providers/Globalstyles";
 import ContextProvider from "./providers/ContextProvider";
+
 const nunito = Nunito({ 
   weight: ["400","500","600","700","800","900"],
   subsets: ["latin"] });
-import { ClerkProvider,auth } from '@clerk/nextjs'
+import { ClerkProvider,auth ,SignedOut, SignedIn} from '@clerk/nextjs'
+import { useId } from "react";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -42,8 +44,10 @@ export default function RootLayout({
           easing="cubic-bezier(.53,.21,0,1)"
         />
         <ContextProvider>
-          <Globalstyles>
-              {userId&&<Sidebar/>}
+          <Globalstyles>  
+            <SignedIn>
+             <Sidebar/>
+            </SignedIn>
             <div className="w-full">{children}</div>
           </Globalstyles>
         </ContextProvider>
